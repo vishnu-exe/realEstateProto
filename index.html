@@ -182,6 +182,35 @@
 				font-weight: bold;
 				color: #fff;
 			}
+
+			@media (max-width: 768px) {
+				.property-card {
+					width: calc(50% - 20px);
+				}
+
+				.navbar-brand {
+					font-size: 1.5rem;
+				}
+
+				.navbar-nav .nav-link {
+					padding-right: 10px;
+					font-size: 1rem;
+				}
+			}
+
+			@media (max-width: 576px) {
+				.property-card {
+					width: calc(100% - 20px);
+				}
+				.navbar-brand {
+					font-size: 1.2rem;
+				}
+
+				.navbar-nav .nav-link {
+					padding-right: 8px;
+					font-size: 0.9rem;
+				}
+			}
 		</style>
 	</head>
 	<body>
