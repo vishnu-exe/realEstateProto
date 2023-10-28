@@ -1476,6 +1476,10 @@
 		form.addEventListener("submit", async (event) => {
 			event.preventDefault();
 
+			const submitButton = form.querySelector('button[type="submit"]');
+			submitButton.disabled = true;
+			submitButton.innerHTML = "Uploading, Please Wait";
+
 			const fileUpload = document.getElementById("file-upload");
 			const errorMessage = document.getElementById("galleryErrorMessage");
 			if (!fileUpload.files.length) {
@@ -1524,10 +1528,14 @@
 						gallery.style.backgroundColor = "green";
 						sessionStorage.setItem("gallerySectionFilled", "true");
 						propertyImages.length = 0;
+						submitButton.disabled = false;
+						submitButton.innerHTML = "Submit";
 					}
 				})
 				.catch((error) => {
 					console.error("Error uploading images:", error);
+					submitButton.disabled = false;
+					submitButton.innerHTML = "Submit";
 				});
 
 			console.log("Array of Image URLs:", propertyImages);
@@ -1764,7 +1772,7 @@
 					});
 					setTimeout(() => {
 						closeModal(modal);
-					}, 5000);
+					}, 2500);
 				};
 
 				const createModal = (message) => {
