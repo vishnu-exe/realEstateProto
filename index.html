@@ -1,0 +1,1167 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta
+			name="viewport"
+			content="width=device-width, initial-scale=1.0" />
+		<title>Real Estate Website</title>
+		<link
+			href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css"
+			rel="stylesheet" />
+		<link
+			href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
+			rel="stylesheet"
+			integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9"
+			crossorigin="anonymous" />
+		<link
+			rel="stylesheet"
+			type="text/css"
+			href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
+		<script
+			src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+			integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+			crossorigin="anonymous"></script>
+		<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+		<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+			integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+			crossorigin="anonymous"
+			referrerpolicy="no-referrer" />
+		<style>
+			.body {
+				background: linear-gradient(#13294b, #1e96fc);
+			}
+			.main {
+				background: linear-gradient(#13294b, #1e96fc);
+			}
+			#property-container {
+				display: flex;
+				flex-wrap: wrap;
+				justify-content: space-between;
+			}
+
+			.property-card {
+				width: calc(33.33% - 20px);
+				margin: 10px;
+				box-sizing: border-box;
+				position: relative;
+			}
+
+			#property-card-1,
+			#property-card-2,
+			#property-card-3 {
+				position: relative;
+				width: 100%;
+				height: 300px;
+				overflow: hidden;
+			}
+
+			.property-card img {
+				width: 100%;
+				height: 100%;
+				object-fit: cover;
+			}
+
+			/* .carousel {
+				width: 100%;
+				display: flex;
+			} */
+			.carousel img {
+				width: 100%;
+				height: 200px; /* Adjust the height as needed */
+				object-fit: cover;
+			}
+			.property-details {
+				position: absolute;
+				bottom: 10px;
+				left: 10px;
+				background-color: rgba(0, 0, 0, 0.5);
+				color: #fff;
+			}
+			.navbar-brand {
+				font-size: 1.8rem;
+				font-weight: bold;
+			}
+
+			.navbar-nav .nav-link {
+				padding-right: 20px;
+				font-size: 1.1rem;
+			}
+
+			.navbar-nav .nav-link:hover {
+				color: #007bff;
+			}
+
+			.navbar {
+				padding: 14px 16px;
+				background-color: #f8f9fa;
+			}
+			.carousel-item {
+				height: 300px;
+				background-color: #f5f5f5;
+				color: #000;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				font-size: 24px;
+			}
+			.search-bar {
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				padding: 40px 0;
+			}
+			.stamp {
+				position: absolute;
+				top: 10px;
+				left: 10px;
+				color: white;
+				background-color: rgba(
+					0,
+					0,
+					0,
+					0.7
+				); /* Adjust the background color as needed */
+				padding: 5px 10px;
+				text-transform: uppercase;
+				font-size: 14px;
+			}
+			#search-section {
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				gap: 20px;
+				padding: 30px;
+				border: 1px solid #e6e6e6;
+				border-radius: 10px;
+				box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+			}
+			#property-action {
+				display: flex;
+				gap: 10px;
+			}
+			#property-action div {
+				padding: 10px 20px;
+				border: 1px solid #e6e6e6;
+				border-radius: 5px;
+				cursor: pointer;
+			}
+			#property-action div.selected {
+				background-color: #007bff;
+				color: #ffffff;
+			}
+			#apply-filters-button {
+				padding: 10px 20px;
+				font-size: 1.2rem;
+				background-color: #4caf50;
+				color: white;
+				border: none;
+				border-radius: 5px;
+				cursor: pointer;
+				transition: background-color 0.3s;
+			}
+			#apply-filters {
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				margin-top: 20px;
+			}
+
+			#apply-filters-button:hover {
+				background-color: #45a049;
+			}
+
+			h1 {
+				text-align: center;
+				padding: 20px 0;
+				font-size: 36px;
+				font-weight: bold;
+				color: #fff;
+			}
+		</style>
+	</head>
+	<body>
+		<header>
+			<nav class="navbar navbar-expand-lg navbar-light bg-light">
+				<a
+					class="navbar-brand"
+					href="#"
+					>Real Estate</a
+				>
+				<button
+					class="navbar-toggler"
+					type="button"
+					data-toggle="collapse"
+					data-target="#navbarNav"
+					aria-controls="navbarNav"
+					aria-expanded="false"
+					aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<div
+					class="collapse navbar-collapse"
+					id="navbarNav">
+					<ul class="navbar-nav ml-auto">
+						<li class="nav-item active">
+							<a
+								class="nav-link"
+								href="#"
+								>Home</a
+							>
+						</li>
+						<li class="nav-item">
+							<a
+								class="nav-link"
+								href="#"
+								>Listings</a
+							>
+						</li>
+						<li class="nav-item">
+							<a
+								class="nav-link"
+								href="#"
+								>About</a
+							>
+						</li>
+						<li class="nav-item">
+							<a
+								class="nav-link"
+								href="#"
+								>Contact</a
+							>
+						</li>
+						<li class="nav-item">
+							<a
+								class="nav-link"
+								href="#"
+								>Sign Up</a
+							>
+						</li>
+						<li class="nav-item">
+							<a
+								class="nav-link"
+								href="#"
+								>Login</a
+							>
+						</li>
+						<li class="nav-item">
+							<a
+								class="nav-link"
+								href="addListing.html"
+								>Add Listings</a
+							>
+						</li>
+					</ul>
+				</div>
+			</nav>
+		</header>
+
+		<main>
+			<div style="background: linear-gradient(#13294b, #1e96fc)">
+				<section class="featured-listings text-center py-16">
+					<br />
+					<h2 class="text-3xl font-bold text-white mb-4">
+						Explore Our Featured Listings
+					</h2>
+					<p class="text-lg text-gray-600 mb-8">
+						Discover some of the most exquisite properties on the market
+					</p>
+					<div class="slick-carousel">
+						<div class="carousel-item">
+							<!-- Featured Listings Content 1 -->
+						</div>
+						<div class="carousel-item">
+							<!-- Featured Listings Content 2 -->
+						</div>
+						<div class="carousel-item">
+							<!-- Featured Listings Content 3 -->
+						</div>
+					</div>
+				</section>
+				<br /><br />
+				<h1>LATEST LISTINGS</h1>
+				<div id="apply-filters">
+					<button id="apply-filters-button">Apply Filters</button>
+				</div>
+
+				<div
+					id="search-section"
+					class="flex justify-center items-center h-screen"
+					style="display: none">
+					<div class="w-1/3 p-6 bg-white rounded shadow-lg">
+						<select
+							id="apartment-type"
+							class="w-full p-2 mb-4 border rounded">
+							<option
+								value=""
+								selected
+								disabled
+								hidden>
+								Building Type
+							</option>
+							<option value="apartment">Apartment</option>
+							<option value="independent-house">Independent House/Villa</option>
+							<option value="gated-community">Gated Community Villa</option>
+						</select>
+						<select
+							id="bhk-type"
+							class="w-full p-2 mb-4 border rounded">
+							<option
+								value=""
+								selected
+								disabled
+								hidden>
+								BHK Type
+							</option>
+							<option value="1rk">1 RK</option>
+							<option value="1bhk">1 BHK</option>
+							<option value="2bhk">2 BHK</option>
+							<option value="3bhk">3 BHK</option>
+							<option value="4bhk">4 BHK</option>
+						</select>
+						<div class="relative mb-4">
+							<input
+								type="text"
+								id="locality-type"
+								placeholder="Locality"
+								class="w-full p-2 border rounded" />
+							<div
+								id="locality-options"
+								class="absolute top-10 left-0 w-full bg-white border rounded z-10"></div>
+						</div>
+						<div class="flex justify-between mb-4">
+							<div
+								id="buy"
+								class="flex-1 mr-2 p-2 text-center border rounded cursor-pointer hover:bg-gray-100">
+								Buy
+							</div>
+							<div
+								id="rent"
+								class="flex-1 mx-2 p-2 text-center border rounded cursor-pointer hover:bg-gray-100">
+								Rent
+							</div>
+							<div
+								id="commercial"
+								class="flex-1 ml-2 p-2 text-center border rounded cursor-pointer hover:bg-gray-100">
+								Commercial
+							</div>
+						</div>
+						<div
+							id="slider-section"
+							class="mb-4">
+							<div
+								id="rent-slider-container"
+								style="display: none">
+								<label
+									for="rent-slider"
+									class="mb-2 block"
+									>Select Your Budget Range (Rent):
+								</label>
+								<input
+									type="range"
+									id="rent-slider"
+									min="10000"
+									max="100000"
+									value="10000"
+									step="1000"
+									class="w-full"
+									style="display: none" />
+								<span
+									id="rent-range-values"
+									class="block text-center mt-2"></span>
+							</div>
+							<div
+								id="sale-slider-container"
+								style="display: none">
+								<label
+									for="sale-slider"
+									class="mb-2 block"
+									>Select Your Budget Range (Sale):
+								</label>
+								<input
+									type="range"
+									id="sale-slider"
+									min="1000000"
+									max="100000000"
+									value="1000000"
+									step="100000"
+									class="w-full"
+									style="display: none" />
+								<span
+									id="sale-range-values"
+									class="block text-center mt-2"></span>
+							</div>
+						</div>
+						<div class="flex justify-between">
+							<button
+								id="search-button"
+								class="w-1/2 p-2 bg-blue-500 text-white rounded hover:bg-blue-700">
+								Search
+							</button>
+							<button
+								id="reset-button"
+								class="w-1/2 p-2 bg-red-500 text-white rounded hover:bg-red-700">
+								Reset
+							</button>
+						</div>
+					</div>
+				</div>
+				<section class="recent-listings">
+					<div
+						id="property-container"
+						class="slick-carousel">
+						<!-- Property data will be dynamically added here -->
+					</div>
+				</section>
+
+				<!-- Rent Property Modal -->
+				<!-- Rent Property Modal -->
+				<div
+					id="rentPropertyModal"
+					class="modal hidden fixed w-full h-full top-0 left-0 flex items-center justify-center">
+					<div class="modal-content bg-white w-1/2 p-8 rounded-lg relative">
+						<span
+							id="rentCloseModal"
+							class="close-button absolute top-0 right-0 m-4 text-3xl cursor-pointer z-50"
+							>&times;</span
+						>
+						<div
+							id="rentPropertyImages"
+							class="mt-4 mb-6"></div>
+						<!-- Other Property Details -->
+						<p
+							id="propertyId"
+							class="my-2 text-lg text-center capitalize">
+							Property ID:
+						</p>
+						<p
+							id="bhkType"
+							class="my-2 text-center capitalize">
+							BHK Type:
+						</p>
+						<p
+							id="buildingType"
+							class="my-2 text-center capitalize">
+							Building Type:
+						</p>
+						<p
+							id="locality"
+							class="my-2 text-center capitalize">
+							Locality:
+						</p>
+						<p
+							id="landmark"
+							class="my-2 text-center capitalize">
+							Landmark:
+						</p>
+						<p
+							id="city"
+							class="my-2 text-center capitalize">
+							City:
+						</p>
+						<p
+							id="propertyAge"
+							class="my-2 text-center capitalize">
+							Property Age:
+						</p>
+						<p
+							id="facing"
+							class="my-2 text-center capitalize">
+							Facing:
+						</p>
+						<p
+							id="floor"
+							class="my-2 text-center capitalize">
+							Floor:
+						</p>
+						<p
+							id="squareFeet"
+							class="my-2 text-center capitalize">
+							Square Feet:
+						</p>
+						<p
+							id="rentNegotiable"
+							class="my-2 text-center capitalize">
+							Rent Negotiable:
+						</p>
+						<p
+							id="expectedRent"
+							class="my-2 text-center capitalize">
+							Expected Rent:
+						</p>
+						<p
+							id="expectedDeposit"
+							class="my-2 text-center capitalize">
+							Expected Deposit:
+						</p>
+						<p
+							id="furnishing"
+							class="my-2 text-center capitalize">
+							Furnishing:
+						</p>
+						<p
+							id="parking"
+							class="my-2 text-center capitalize">
+							Parking:
+						</p>
+						<p
+							id="preferredTenants"
+							class="my-2 text-center capitalize">
+							Preferred Tenants:
+						</p>
+						<p
+							id="description"
+							class="my-2 text-center capitalize">
+							Description:
+						</p>
+						<!-- Add buttons or other elements as needed -->
+					</div>
+				</div>
+
+				<!-- Sales Property Modal -->
+				<div
+					id="salesPropertyModal"
+					class="modal">
+					<div class="modal-content p-4">
+						<span
+							id="salesCloseModal"
+							class="close-button absolute top-0 right-0 m-4 text-3xl cursor-pointer z-50"
+							>&times;</span
+						>
+						<!-- Property Images Section -->
+						<div
+							id="salesPropertyImages"
+							class="mt-4 mb-6"></div>
+						<!-- Other Property Details -->
+						<p
+							id="salesPropertyId"
+							class="mb-2">
+							Property ID:
+						</p>
+						<p
+							id="salesBhkType"
+							class="mb-2">
+							BHK Type:
+						</p>
+						<p
+							id="salesBuildingType"
+							class="mb-2">
+							Building Type:
+						</p>
+						<p
+							id="salesLocality"
+							class="mb-2">
+							Locality:
+						</p>
+						<p
+							id="salesLandmark"
+							class="mb-2">
+							Landmark:
+						</p>
+						<p
+							id="salesCity"
+							class="mb-2">
+							City:
+						</p>
+						<p
+							id="salesPropertyAge"
+							class="mb-2">
+							Property Age:
+						</p>
+						<p
+							id="salesFacing"
+							class="mb-2">
+							Facing:
+						</p>
+						<p
+							id="salesFloor"
+							class="mb-2">
+							Floor:
+						</p>
+						<p
+							id="salesSquareFeet"
+							class="mb-2">
+							Square Feet:
+						</p>
+						<p
+							id="salesPriceNegotiable"
+							class="mb-2">
+							Price Negotiable:
+						</p>
+						<p
+							id="salesUnderLoan"
+							class="mb-2">
+							Currently under Loan:
+						</p>
+						<p
+							id="salesExpectedPrice"
+							class="mb-2">
+							Expected Price:
+						</p>
+						<p
+							id="salesFurnishing"
+							class="mb-2">
+							Furnishing:
+						</p>
+						<p
+							id="salesParking"
+							class="mb-2">
+							Parking:
+						</p>
+						<p
+							id="salesDescription"
+							class="mb-2">
+							Description:
+						</p>
+						<!-- Add buttons or other elements as needed -->
+					</div>
+				</div>
+			</div>
+		</main>
+
+		<footer>
+			<!-- Add footer content here -->
+		</footer>
+
+		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+		<script type="module">
+			//------------------------Firebase Config-----------------------
+			import { initializeApp } from "https://www.gstatic.com/firebasejs/10.3.1/firebase-app.js";
+			import {
+				ref,
+				uploadBytesResumable,
+				uploadBytes,
+				getDownloadURL,
+				getStorage,
+			} from "https://www.gstatic.com/firebasejs/10.3.1/firebase-storage.js";
+			import {
+				getFirestore,
+				collection,
+				query,
+				where,
+				getDocs,
+				doc,
+				getDoc,
+				setDoc,
+			} from "https://www.gstatic.com/firebasejs/10.3.1/firebase-firestore.js";
+
+			const firebaseConfig = {
+				apiKey: "AIzaSyCni58nYfqke3dQ0YF85mUG0GelTXd4wbU",
+				authDomain: "insta-web-48e44.firebaseapp.com",
+				databaseURL: "https://insta-web-48e44-default-rtdb.firebaseio.com",
+				projectId: "insta-web-48e44",
+				storageBucket: "insta-web-48e44.appspot.com",
+				messagingSenderId: "685569844225",
+				appId: "1:685569844225:web:ee6d8428a9616b11f44c00",
+			};
+
+			const app = initializeApp(firebaseConfig);
+			const firestore = getFirestore(app);
+			const storage = getStorage(app);
+
+			const usersCollection = collection(firestore, "users");
+			const userDocRef = doc(usersCollection, "userDoc");
+
+			const buyButton = document.getElementById("buy");
+			const rentButton = document.getElementById("rent");
+			const commercialButton = document.getElementById("commercial");
+			const rentSlider = document.getElementById("rent-slider");
+			const saleSlider = document.getElementById("sale-slider");
+			const sliderSection = document.getElementById("slider-section");
+			const rentSliderContainer = document.getElementById(
+				"rent-slider-container"
+			);
+			const saleSliderContainer = document.getElementById(
+				"sale-slider-container"
+			);
+
+			buyButton.addEventListener("click", handleBuyClick);
+			rentButton.addEventListener("click", handleRentClick);
+
+			function handleBuyClick() {
+				sliderSection.style.display = "block";
+				rentSlider.style.display = "none";
+				rentSliderContainer.style.display = "none";
+				saleSliderContainer.style.display = "block";
+				saleSlider.style.display = "block";
+			}
+
+			function handleRentClick() {
+				sliderSection.style.display = "block";
+				rentSliderContainer.style.display = "block";
+				rentSlider.style.display = "block";
+				saleSlider.style.display = "none";
+				saleSliderContainer.style.display = "none";
+			}
+			const applyFiltersButton = document.getElementById(
+				"apply-filters-button"
+			);
+			const searchSection = document.getElementById("search-section");
+
+			applyFiltersButton.addEventListener("click", function () {
+				if (searchSection.style.display === "none") {
+					searchSection.style.display = "block";
+				} else {
+					searchSection.style.display = "none";
+				}
+			});
+
+			const rentRangeValues = document.getElementById("rent-range-values");
+			//rentRangeValues.innerText = `${rentSlider.min} - ${rentSlider.max}`;
+
+			rentSlider.addEventListener("input", function () {
+				rentRangeValues.innerText = `${this.min} - ${this.value}`;
+				rentRangeValues.style.display = "inline";
+				saleRangeValues.style.display = "none";
+				const rentSliderValue = rentSlider.value;
+			});
+
+			const saleRangeValues = document.getElementById("sale-range-values");
+
+			saleSlider.addEventListener("input", function () {
+				saleRangeValues.innerText = `${this.min} - ${this.value}`;
+				saleRangeValues.style.display = "inline";
+				rentRangeValues.style.display = "none";
+				const saleSliderValue = saleSlider.value;
+			});
+			function populatePropertyData(properties) {
+				const propertyContainer = document.getElementById("property-container");
+				propertyContainer.innerHTML = "";
+				properties.forEach((property) => {
+					const card = document.createElement("div");
+					card.classList.add("property-card");
+					card.addEventListener("click", () => {
+						openPropertyModal(property);
+					});
+
+					const carousel = document.createElement("div");
+					carousel.classList.add("carousel");
+
+					property.imageUrls.forEach((imageUrl) => {
+						const propertyImage = document.createElement("img");
+						propertyImage.src = imageUrl;
+						propertyImage.alt = property.locality;
+						carousel.appendChild(propertyImage);
+					});
+
+					card.appendChild(carousel);
+
+					const stamp = document.createElement("div");
+					stamp.classList.add("stamp");
+					if (property.adType === "rent") {
+						stamp.textContent = "For Rent";
+					} else if (
+						property.adType === "resale" ||
+						property.adType === "sale"
+					) {
+						stamp.textContent = "For Sale";
+					}
+					card.appendChild(stamp);
+
+					const details = document.createElement("div");
+					details.classList.add("property-details");
+					details.innerHTML = `<p>${property.bhkType.toUpperCase()}</p>
+			                          <p>${property.buildingType.toUpperCase()}</p>
+			                          <p>Locality: ${property.locality.toUpperCase()}</p>`;
+					card.appendChild(details);
+
+					propertyContainer.appendChild(card);
+				});
+
+				if (!$(".carousel").hasClass("slick-initialized")) {
+					$(".carousel").slick({
+						slidesToShow: 1,
+						slidesToScroll: 1,
+						autoplay: true,
+						autoplaySpeed: 2000,
+						arrows: false,
+					});
+				}
+			}
+
+			function openPropertyModal(property) {
+				if (property.adType === "rent") {
+					rentPropertyModal(property);
+				} else if (property.adType === "resale" || property.adType === "sale") {
+					salesPropertyModal(property);
+				}
+			}
+
+			document
+				.getElementById("rentCloseModal")
+				.addEventListener("click", function () {
+					document.getElementById("rentPropertyModal").style.display = "none";
+				});
+
+			function rentPropertyModal(property) {
+				console.log("Rent property modal opened with property:", property);
+				document.getElementById(
+					"propertyId"
+				).innerText = `Property ID: ${property.propertyId}`;
+				document.getElementById(
+					"bhkType"
+				).innerText = `BHK Type: ${property.bhkType}`;
+				document.getElementById(
+					"buildingType"
+				).innerText = `Building Type: ${property.buildingType}`;
+				document.getElementById(
+					"locality"
+				).innerText = `Locality: ${property.locality}`;
+				document.getElementById(
+					"landmark"
+				).innerText = `Landmark: ${property.landmark}`;
+				document.getElementById("city").innerText = `City: ${property.city}`;
+				document.getElementById(
+					"propertyAge"
+				).innerText = `Property Age: ${property.propertyAge}`;
+				document.getElementById(
+					"facing"
+				).innerText = `Facing: ${property.facing}`;
+				document.getElementById("floor").innerText = `Floor: ${property.floor}`;
+				document.getElementById(
+					"squareFeet"
+				).innerText = `Square Feet: ${property.squareFeet}`;
+				document.getElementById(
+					"rentNegotiable"
+				).innerText = `Rent Negotiable: ${property.rentalData.rentNegotiable}`;
+				document.getElementById(
+					"expectedRent"
+				).innerText = `Expected Rent: ₹${property.rentalData.expectedRent}`;
+				document.getElementById(
+					"expectedDeposit"
+				).innerText = `Expected Deposit: ₹${property.rentalData.expectedDeposit}`;
+				document.getElementById(
+					"furnishing"
+				).innerText = `Furnishing: ${property.rentalData.furnishing}`;
+				document.getElementById(
+					"parking"
+				).innerText = `Parking: ${property.rentalData.parking}`;
+				document.getElementById(
+					"preferredTenants"
+				).innerText = `Preferred Tenants: ${property.rentalData.preferredTenants}`;
+				document.getElementById(
+					"description"
+				).innerText = `Description: ${property.rentalData.description}`;
+
+				const rentPropertyImages =
+					document.getElementById("rentPropertyImages");
+				if (rentPropertyImages) {
+					property.imageUrls.forEach((imageUrl) => {
+						const imageElement = document.createElement("img");
+						imageElement.src = imageUrl;
+						rentPropertyImages.appendChild(imageElement);
+					});
+
+					document.getElementById("rentPropertyModal").style.display = "block";
+				} else {
+					console.error("Carousel element not found in the document.");
+				}
+			}
+
+			function salesPropertyModal(property) {
+				console.log("Sales property modal opened with property:", property);
+				document.getElementById(
+					"salesPropertyId"
+				).innerText = `Property ID: ${property.propertyId}`;
+				document.getElementById(
+					"salesBhkType"
+				).innerText = `BHK Type: ${property.bhkType}`;
+				document.getElementById(
+					"salesBuildingType"
+				).innerText = `Building Type: ${property.buildingType}`;
+				document.getElementById(
+					"salesLocality"
+				).innerText = `Locality: ${property.locality}`;
+				document.getElementById(
+					"salesLandmark"
+				).innerText = `Landmark: ${property.landmark}`;
+				document.getElementById(
+					"salesCity"
+				).innerText = `City: ${property.city}`;
+				document.getElementById(
+					"salesPropertyAge"
+				).innerText = `Property Age: ${property.propertyAge}`;
+				document.getElementById(
+					"salesFacing"
+				).innerText = `Facing: ${property.facing}`;
+				document.getElementById(
+					"salesFloor"
+				).innerText = `Floor: ${property.floor}`;
+				document.getElementById(
+					"salesSquareFeet"
+				).innerText = `Square Feet: ${property.squareFeet}`;
+				document.getElementById(
+					"salesPriceNegotiable"
+				).innerText = `Price Negotiable: ${property.salesData.priceNegotiable}`;
+				document.getElementById(
+					"salesUnderLoan"
+				).innerText = `Currently under Loan: ${property.salesData.underLoan}`;
+				document.getElementById(
+					"salesExpectedPrice"
+				).innerText = `Expected Price: ₹${property.salesData.expectedPrice}`;
+				document.getElementById(
+					"salesFurnishing"
+				).innerText = `Furnishing: ${property.salesData.furnishing}`;
+				document.getElementById(
+					"salesParking"
+				).innerText = `Parking: ${property.salesData.parking}`;
+				document.getElementById(
+					"salesDescription"
+				).innerText = `Description: ${property.salesData.description}`;
+
+				const salesPropertyImages = document.getElementById(
+					"salesPropertyImages"
+				);
+				if (salesPropertyImages) {
+					property.imageUrls.forEach((imageUrl) => {
+						const imageElement = document.createElement("img");
+						imageElement.src = imageUrl;
+						salesPropertyImages.appendChild(imageElement);
+					});
+
+					document.getElementById("salesPropertyModal").style.display = "block";
+				} else {
+					console.error(
+						"Sales property images element not found in the document."
+					);
+				}
+			}
+			document
+				.getElementById("salesCloseModal")
+				.addEventListener("click", function () {
+					document.getElementById("salesPropertyModal").style.display = "none";
+				});
+
+			function populateFeaturedPropertyData(properties) {
+				const carousel = document.querySelector(
+					".featured-listings .slick-carousel"
+				);
+				carousel.innerHTML = "";
+
+				const maxListings = 3;
+				const propertiesToDisplay = properties.slice(0, maxListings);
+
+				propertiesToDisplay.forEach((property, index) => {
+					const card = document.createElement("div");
+					card.classList.add("carousel-item");
+					card.classList.add("property-card");
+					card.id = `property-card-${index + 1}`;
+
+					const propertyImage = document.createElement("img");
+					propertyImage.src = property.imageUrls[0];
+					propertyImage.alt = property.locality;
+					card.appendChild(propertyImage);
+
+					const stamp = document.createElement("div");
+					stamp.classList.add("stamp");
+					if (property.adType === "rent") {
+						stamp.textContent = "For Rent";
+					} else if (
+						property.adType === "resale" ||
+						property.adType === "sale"
+					) {
+						stamp.textContent = "For Sale";
+					}
+					card.appendChild(stamp);
+
+					const details = document.createElement("div");
+					details.classList.add("property-details");
+					details.id = `property-details-${index + 1}`;
+					details.innerHTML = `<p>${property.bhkType.toUpperCase()}</p>
+                             <p>${property.buildingType.toUpperCase()}</p>
+                             <p>Locality: ${property.locality.toUpperCase()}</p>`;
+					card.appendChild(details);
+
+					carousel.appendChild(card);
+				});
+				$(carousel).slick({
+					slidesToShow: 1,
+					slidesToScroll: 1,
+					autoplay: true,
+					autoplaySpeed: 2000,
+					arrows: false,
+				});
+			}
+
+			function fetchDataAndPopulate() {
+				getDoc(userDocRef)
+					.then((doc) => {
+						if (doc.exists()) {
+							const userDocData = doc.data();
+							populatePropertyData(userDocData.properties);
+							populateFeaturedPropertyData(userDocData.properties);
+						} else {
+							console.log("No such document!");
+						}
+					})
+					.catch((error) => {
+						console.log("Error getting document:", error);
+					});
+			}
+
+			document
+				.getElementById("search-button")
+				.addEventListener("click", function () {
+					const selectedApartmentType =
+						document.getElementById("apartment-type").value;
+					const selectedBhkType = document.getElementById("bhk-type").value;
+					const activeSlider = document.querySelector(
+						'#slider-section input[type="range"]:not([style*="display: none"])'
+					);
+					let activeSliderId = "";
+					let activeSliderValue = "";
+					if (activeSlider) {
+						activeSliderId = activeSlider.getAttribute("id");
+						activeSliderValue = parseInt(activeSlider.value);
+						//console.log(activeSliderId, activeSliderValue);
+					}
+					const localityInput = document
+						.getElementById("locality-type")
+						.value.toLowerCase();
+					//console.log(activeSliderId);
+
+					getDoc(userDocRef)
+						.then((doc) => {
+							if (doc.exists()) {
+								const userDocData = doc.data();
+								let filteredProperties = userDocData.properties;
+
+								if (selectedApartmentType) {
+									filteredProperties = filteredProperties.filter(
+										(property) =>
+											property.buildingType === selectedApartmentType
+									);
+								}
+								console.log(selectedBhkType);
+								if (selectedBhkType) {
+									filteredProperties = filteredProperties.filter(
+										(property) => property.bhkType === selectedBhkType
+									);
+								}
+
+								if (activeSliderId === "rent-slider") {
+									filteredProperties = filteredProperties.filter(
+										(property) => property.adType === "rent"
+									);
+								} else if (activeSliderId === "sale-slider") {
+									filteredProperties = filteredProperties.filter(
+										(property) =>
+											property.adType === "sale" || property.adType === "resale"
+									);
+								}
+								if (activeSliderId === "rent-slider") {
+									filteredProperties = filteredProperties.filter(
+										(property) =>
+											property.rentalData.expectedRent <= activeSliderValue
+									);
+								} else if (activeSliderId === "sale-slider") {
+									filteredProperties = filteredProperties.filter(
+										(property) =>
+											property.salesData.expectedPrice <= activeSliderValue
+									);
+								}
+								if (localityInput) {
+									filteredProperties = filteredProperties.filter((property) =>
+										property.locality.toLowerCase().includes(localityInput)
+									);
+								}
+
+								console.log(activeSliderValue);
+								console.log(filteredProperties);
+								populatePropertyData(filteredProperties);
+							} else {
+								console.log("No such document!");
+							}
+						})
+						.catch((error) => {
+							console.log("Error getting document:", error);
+						});
+				});
+
+			const localityInput = document.getElementById("locality-type");
+			const optionsContainer = document.getElementById("locality-options");
+
+			document
+				.getElementById("locality-type")
+				.addEventListener("input", function () {
+					const input = this.value;
+					const optionsContainer = document.getElementById("locality-options");
+					if (!input) {
+						optionsContainer.innerHTML = "";
+						return;
+					}
+
+					getDoc(userDocRef)
+						.then((doc) => {
+							if (doc.exists) {
+								const userDocData = doc.data();
+								const properties = userDocData.properties;
+
+								const filteredLocalities = properties
+									.map((property) => property.locality)
+									.filter(
+										(locality, index, self) =>
+											locality.toLowerCase().includes(input.toLowerCase()) &&
+											self.indexOf(locality) === index
+									);
+
+								if (filteredLocalities.length > 0) {
+									optionsContainer.innerHTML = "";
+									filteredLocalities.forEach((locality) => {
+										const option = document.createElement("div");
+										option.textContent = locality;
+										option.classList.add("option");
+										optionsContainer.appendChild(option);
+									});
+								} else {
+									optionsContainer.innerHTML = "No listing available for now";
+								}
+							}
+						})
+						.catch((error) => {
+							console.error("Error getting document:", error);
+						});
+				});
+
+			localityInput.addEventListener("keyup", function (event) {
+				if (event.key === "Backspace" && !localityInput.value) {
+					optionsContainer.innerHTML = "";
+				}
+			});
+
+			document
+				.getElementById("reset-button")
+				.addEventListener("click", function () {
+					document.getElementById("apartment-type").value = "";
+					document.getElementById("bhk-type").value = "";
+					document.getElementById("locality-type").value = "";
+					document.getElementById("rent-slider").style.display = "none";
+					document.getElementById("sale-slider").style.display = "none";
+					document.getElementById("rent-slider-container").style.display =
+						"none";
+					document.getElementById("sale-slider-container").style.display =
+						"none";
+
+					getDoc(userDocRef)
+						.then((doc) => {
+							if (doc.exists()) {
+								const userDocData = doc.data();
+								populatePropertyData(userDocData.properties);
+							} else {
+								console.log("No such document!");
+							}
+						})
+						.catch((error) => {
+							console.log("Error getting document:", error);
+						});
+				});
+
+			fetchDataAndPopulate();
+		</script>
+	</body>
+</html>

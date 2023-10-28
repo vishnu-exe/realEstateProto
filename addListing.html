@@ -1,0 +1,1728 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta
+			name="viewport"
+			content="width=device-width, initial-scale=1.0" />
+		<title>Real Estate Website</title>
+		<link
+			href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+			rel="stylesheet" />
+		<link
+			href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
+			rel="stylesheet"
+			integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9"
+			crossorigin="anonymous" />
+		<script
+			src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+			integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+			crossorigin="anonymous"></script>
+		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+		<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+		<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+			integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+			crossorigin="anonymous"
+			referrerpolicy="no-referrer" />
+		<link
+			rel="preconnect"
+			href="https://fonts.googleapis.com" />
+		<link
+			rel="preconnect"
+			href="https://fonts.gstatic.com"
+			crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Mukta&family=Permanent+Marker&display=swap"
+			rel="stylesheet" />
+		<style>
+			.body {
+				background: linear-gradient(#13294b, #1e96fc);
+			}
+			.user-profile {
+				text-align: center;
+				padding: 40px 0;
+			}
+			.main {
+				background: linear-gradient(#13294b, #1e96fc);
+			}
+
+			.profile-picture {
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				width: 150px;
+				height: 150px;
+				border-radius: 50%;
+				overflow: hidden;
+				margin-bottom: 20px;
+				background-color: #166ec5;
+			}
+
+			.profile-picture img {
+				width: 100%;
+				height: 100%;
+				object-fit: cover;
+			}
+
+			.user-profile .profile-details {
+				font-size: 18px;
+				margin-bottom: 20px;
+				color: white;
+			}
+
+			.add-property-btn {
+				text-align: center;
+				margin-bottom: 40px;
+			}
+
+			.image-box {
+				display: inline-block;
+				margin: 5px;
+			}
+
+			.custom-file-upload {
+				border: 1px solid #ccc;
+				display: inline-block;
+				padding: 6px 12px;
+				cursor: pointer;
+			}
+
+			.custom-file-upload:hover {
+				background: #f0f0f0;
+			}
+
+			.modal {
+				display: none;
+				position: fixed;
+				z-index: 1;
+				left: 0;
+				top: 0;
+				width: 100%;
+				height: 100%;
+				overflow: auto;
+				background-color: rgba(0, 0, 0, 0.4);
+			}
+
+			.modal-content {
+				background-color: #fefefe;
+				margin: 10% auto;
+				padding: 10px;
+				border: 1px solid #888;
+				width: 50%;
+			}
+
+			/* Form Styles */
+			#propertyForm {
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+			}
+
+			label {
+				font-weight: bold;
+				margin-bottom: 10px;
+				padding: 0px 5px 5px 0px;
+			}
+
+			select,
+			input[type="text"],
+			input[type="number"] {
+				width: 100%;
+				padding: 5px;
+				margin-bottom: 20px;
+				border: 1px solid #ccc;
+				border-radius: 5px;
+				box-sizing: border-box;
+			}
+
+			.property-block {
+				background-color: #7996f3;
+				padding: 20px;
+				margin-bottom: 20px;
+				border-radius: 5px;
+			}
+
+			button[type="submit"] {
+				width: 100%;
+				padding: 15px;
+				background-color: #4caf50;
+				color: white;
+				border: none;
+				border-radius: 5px;
+				cursor: pointer;
+			}
+
+			button[type="submit"]:hover {
+				background-color: #45a049;
+			}
+
+			#propertyDetails,
+			#localityDetails,
+			#rentalDetails,
+			#saleDetails,
+			#gallery {
+				flex: 1;
+				text-align: center;
+				border: 1px solid #000;
+				padding: 10px;
+				box-sizing: border-box;
+				min-width: 150px;
+				/* Adjust this value according to your requirement */
+			}
+
+			#sucessMessage {
+				display: block;
+				background-color: #dff0d8;
+				color: #3c763d;
+				border: 1px solid #d6e9c6;
+				padding: 15px;
+				border-radius: 4px;
+				margin-top: 10px;
+				font-size: 16px;
+			}
+
+			.close-button {
+				font-size: 20px;
+				font-weight: 800;
+				background: none;
+				border: none;
+				padding: 5px;
+				cursor: pointer;
+				position: absolute;
+				top: 10px;
+				right: 10px;
+				margin-top: -15px;
+			}
+			.nav-link {
+				color: white;
+				font-weight: 500;
+				padding-right: 15px;
+			}
+			.nav-link:hover {
+				color: #ffe972;
+			}
+			.navbar-brand {
+				color: #f5f4ef;
+				margin-left: 7%;
+				font-family: "Ariel", sans-serif;
+				/* font-family: "Permanent Marker", cursive; */
+				font-size: 25px;
+			}
+			.navbar-brand:hover {
+				color: #ffe972;
+			}
+			.listPropertyBtn {
+				border: none;
+				width: 195px;
+				border-radius: 4px;
+				height: 40px;
+				font-weight: 500;
+				background-color: #ffe972;
+				color: #000;
+			}
+			#listPropertyBtn {
+				animation: listPropertyBtn 0.8s ease-in infinite;
+			}
+			@keyframes listPropertyBtn {
+				25% {
+					transform: scale(0.9);
+				}
+				75% {
+					transform: scale(1.1);
+				}
+			}
+		</style>
+
+		<title>Add Listing</title>
+	</head>
+
+	<body>
+		<header>
+			<nav
+				class="navbar navbar-expand-lg navbar-light"
+				style="background-color: #4326e6; color: white">
+				<a
+					class="navbar-brand"
+					href=""
+					>Real Estate</a
+				>
+				<button
+					class="navbar-toggler"
+					type="button"
+					data-toggle="collapse"
+					data-target="#navbarNav"
+					aria-controls="navbarNav"
+					aria-expanded="false"
+					aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<div
+					class="navbar-collapse"
+					id="navbarNav"
+					style="color: white">
+					<ul
+						class="navbar-nav"
+						style="color: white; margin-left: auto; padding-right: 2%">
+						<li class="nav-item active">
+							<a
+								class="nav-link"
+								href="index.html"
+								style="padding-right: 20px"
+								>Home</a
+							>
+						</li>
+						<li class="nav-item">
+							<a
+								class="nav-link"
+								href="#"
+								style="padding-right: 20px"
+								>Listings</a
+							>
+						</li>
+						<li class="nav-item">
+							<a
+								class="nav-link"
+								href="#"
+								style="padding-right: 20px"
+								>About</a
+							>
+						</li>
+						<li class="nav-item">
+							<a
+								class="nav-link"
+								href="#"
+								style="padding-right: 20px"
+								>Contact</a
+							>
+						</li>
+						<li class="nav-item">
+							<a
+								class="nav-link"
+								href="#"
+								style="padding-right: 20px"
+								>Sign Up</a
+							>
+						</li>
+						<li class="nav-item">
+							<a
+								class="nav-link"
+								href="#"
+								style="padding-right: 20px"
+								>Login</a
+							>
+						</li>
+					</ul>
+				</div>
+			</nav>
+		</header>
+
+		<main>
+			<div style="background: linear-gradient(#13294b, #1e96fc)">
+				<div class="user-profile flex items-center justify-center">
+					<!-- <img
+						src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100'><text x='25' y='70' font-family='Arial' font-size='18' fill='%23495057'>JD</text></svg>"
+						alt="Profile Picture"
+						class="w-24 h-24 object-cover rounded-full"
+						style="margin-top: 8%" /> -->
+					<div class="profile-details text-center ml-4">
+						<p class="text-xl font-bold">John Doe</p>
+						<p class="text-sm text-gray-600">johndoe@example.com</p>
+						<p class="text-sm text-gray-600">123-456-7890</p>
+					</div>
+				</div>
+
+				<div class="add-property-btn">
+					<button
+						id="listPropertyBtn"
+						class="listPropertyBtn">
+						List your property now
+					</button>
+				</div>
+				<div class="section-heading text-center mt-8">
+					<h2 class="text-white text-3xl font-bold">Your Listings</h2>
+					<div class="mx-auto h-1 w-20 bg-white mt-2"></div>
+				</div>
+				<section
+					id="listing-data"
+					class="container mx-auto mt-8">
+					<div
+						id="property-container"
+						class="grid grid-cols-3 gap-4"></div>
+				</section>
+
+				<div
+					id="myModal"
+					class="modal flex justify-center items-center">
+					<div class="modal-content bg-white w-96 p-6 rounded shadow-lg">
+						<p
+							id="successMessage"
+							class="hidden"></p>
+						<form id="propertyForm">
+							<label
+								for="propertyType"
+								class="text-sm font-semibold"
+								>Property Type:</label
+							>
+							<select
+								id="propertyTypeSelect"
+								class="w-full p-2 mb-4 border rounded">
+								<option
+									value=""
+									selected
+									disabled>
+									Select
+								</option>
+								<option value="residential">Residential</option>
+								<option value="commercial">Commercial</option>
+								<option value="land">Land/Plot</option>
+							</select>
+
+							<label
+								for="adType"
+								class="text-sm font-semibold"
+								>Property Ad Type:</label
+							>
+							<select
+								id="adTypeSelect"
+								class="w-full p-2 mb-4 border rounded">
+								<!-- Options are dynamically added based on the property type selected -->
+							</select>
+
+							<div
+								id="propertyDetails"
+								class="property-block mb-4">
+								Property Details
+							</div>
+							<div
+								id="localityDetails"
+								class="property-block mb-4">
+								Locality Details
+							</div>
+							<div
+								id="rentalDetails"
+								class="property-block mb-4">
+								Rental Details
+							</div>
+							<div
+								id="saleDetails"
+								class="property-block mb-4">
+								Sale Details
+							</div>
+							<div
+								id="gallery"
+								class="property-block mb-4">
+								Gallery
+							</div>
+							<button
+								type="submit"
+								id="mainSubmit"
+								class="w-full bg-blue-500 text-white py-2 rounded">
+								Submit
+							</button>
+						</form>
+						<button
+							id="closeModal"
+							class="close-button absolute top-0 right-0 mt-4 mr-4">
+							&times;
+						</button>
+					</div>
+				</div>
+
+				<div
+					id="propertyDetailsModal"
+					class="modal flex justify-center items-center">
+					<div
+						class="modal-content bg-white w-96 p-6 rounded shadow-lg relative">
+						<form id="propertyDetailsForm">
+							<label
+								for="buildingType"
+								class="text-sm font-semibold"
+								>Building Type<span>*</span>:</label
+							>
+							<select
+								id="buildingType"
+								class="w-full p-2 mb-4 border rounded">
+								<option
+									value=""
+									selected
+									disabled>
+									Select
+								</option>
+								<option value="apartment">Apartment</option>
+								<option value="independent House">
+									Independent House/Villa
+								</option>
+								<option value="gated Community">Gated Community Villa</option>
+							</select>
+
+							<!-- Add other form elements similarly -->
+
+							<label
+								for="bhkType"
+								class="text-sm font-semibold"
+								>BHK Type<span>*</span>:</label
+							>
+							<select
+								id="bhkType"
+								class="w-full p-2 mb-4 border rounded">
+								<option
+									value=""
+									selected
+									disabled>
+									Select
+								</option>
+								<option value="1rk">1 RK</option>
+								<option value="1bhk">1 BHK</option>
+								<option value="2bhk">2 BHK</option>
+								<!-- Add more options as needed -->
+							</select>
+
+							<label
+								for="floor"
+								class="text-sm font-semibold"
+								>Floor<span>*</span>:</label
+							>
+							<select
+								id="floor"
+								class="w-full p-2 mb-4 border rounded">
+								<option
+									value=""
+									selected
+									disabled>
+									Select
+								</option>
+								<option value="ground">Ground</option>
+								<option value="1">1</option>
+								<option value="2">2</option>
+								<!-- Add more options as needed -->
+							</select>
+
+							<label
+								for="totalFloors"
+								class="text-sm font-semibold"
+								>Total Floors<span>*</span>:</label
+							>
+							<select
+								id="totalFloors"
+								class="w-full p-2 mb-4 border rounded">
+								<option
+									value=""
+									selected
+									disabled>
+									Select
+								</option>
+								<option value="ground Only">Ground Only</option>
+								<option value="1">1</option>
+								<option value="2">2</option>
+								<!-- Add more options as needed -->
+							</select>
+
+							<label
+								for="propertyAge"
+								class="text-sm font-semibold"
+								>Property Age<span>*</span>:</label
+							>
+							<select
+								id="propertyAge"
+								class="w-full p-2 mb-4 border rounded">
+								<option
+									value=""
+									selected
+									disabled>
+									Select
+								</option>
+								<option value="1">Less Than A Year</option>
+								<option value="3">1 to 3 years</option>
+								<option value="5">3 to 5 years</option>
+								<option value="10">5 to 10 years</option>
+								<!-- Add more options as needed -->
+							</select>
+
+							<label
+								for="facing"
+								class="text-sm font-semibold"
+								>Facing:</label
+							>
+							<select
+								id="facing"
+								class="w-full p-2 mb-4 border rounded">
+								<option
+									value=""
+									selected
+									disabled>
+									Select
+								</option>
+								<option value="north">North</option>
+								<option value="south">South</option>
+								<option value="east">East</option>
+								<option value="west">West</option>
+								<!-- Add more options as needed -->
+							</select>
+
+							<label
+								for="squareFeet"
+								class="text-sm font-semibold"
+								>Square Feet<span>*</span>:</label
+							>
+							<input
+								type="text"
+								id="squareFeet"
+								pattern="[1-9][0-9]*"
+								required
+								class="w-full p-2 mb-4 border rounded" />
+							<p
+								id="propertyErrorMessage"
+								class="hidden text-red-500">
+								Please fill in all required fields.
+							</p>
+							<button
+								type="submit"
+								id="propertyDetailsubmit"
+								class="w-full bg-blue-500 text-white py-2 rounded">
+								Save and Continue
+							</button>
+						</form>
+						<button
+							id="propertycloseModal"
+							class="close-button absolute top-0 left-0 mt-4 ml-4">
+							&times;
+						</button>
+					</div>
+				</div>
+
+				<div
+					id="localityDetailsModal"
+					class="modal flex justify-center items-center">
+					<div
+						class="modal-content bg-white w-96 p-6 rounded shadow-lg relative">
+						<form
+							id="localityDetailsForm"
+							class="space-y-4">
+							<label
+								for="city"
+								class="text-sm font-semibold"
+								>City<span>*</span>:</label
+							>
+							<select
+								id="city"
+								required
+								class="w-full p-2 border rounded">
+								<option
+									value=""
+									selected
+									disabled>
+									Select
+								</option>
+								<option value="Bangalore">Bangalore</option>
+							</select>
+
+							<label
+								for="locality"
+								class="text-sm font-semibold"
+								>Locality<span>*</span>:</label
+							>
+							<select
+								id="locality"
+								required
+								class="w-full p-2 border rounded">
+								<option
+									value=""
+									selected
+									disabled>
+									Select
+								</option>
+								<option value="Koramangala">Koramangala</option>
+								<option value="Indiranagar">Indiranagar</option>
+								<option value="Jayangar">Jayangar</option>
+								<option value="Malleshwaram">Malleshwaram</option>
+								<option value="Basavanagudi">Basavanagudi</option>
+								<option value="Whitefield">Whitefield</option>
+								<option value="Marathahalli">Marathahalli</option>
+								<option value="Electronic City">Electronic City</option>
+								<option value="HSR Layout">HSR Layout</option>
+								<option value="J. P. Nagar">J. P. Nagar</option>
+							</select>
+
+							<label
+								for="landmark"
+								class="text-sm font-semibold"
+								>Landmark/Street<span>*</span>:</label
+							>
+							<input
+								type="text"
+								id="landmark"
+								required
+								class="w-full p-2 border rounded" />
+
+							<p
+								id="localityErrorMessage"
+								class="hidden text-red-500">
+								Please fill in all required fields.
+							</p>
+
+							<button
+								type="submit"
+								id="localityDetailsubmit"
+								class="w-full bg-blue-500 text-white py-2 rounded">
+								Save and Continue
+							</button>
+						</form>
+						<button
+							id="localitycloseModal"
+							class="close-button absolute top-0 right-0 mt-4 mr-4">
+							&times;
+						</button>
+					</div>
+				</div>
+
+				<div
+					id="rentalDetailsModal"
+					class="modal flex justify-center items-center">
+					<div
+						class="modal-content bg-white w-96 p-6 rounded shadow-lg relative">
+						<form
+							id="rentalDetailsForm"
+							class="space-y-4">
+							<label
+								for="expectedRent"
+								class="text-sm font-semibold"
+								>Expected Rent<span>*</span>:</label
+							>
+							<div class="input-with-symbol">
+								<span class="input-symbol">₹</span>
+								<input
+									type="number"
+									id="expectedRent"
+									min="1"
+									required
+									class="w-full p-2 border rounded" />
+							</div>
+
+							<label
+								for="expectedDeposit"
+								class="text-sm font-semibold"
+								>Expected Deposit<span>*</span>:</label
+							>
+							<div class="input-with-symbol">
+								<span class="input-symbol">₹</span>
+								<input
+									type="number"
+									id="expectedDeposit"
+									min="1"
+									required
+									class="w-full p-2 border rounded" />
+							</div>
+
+							<label
+								for="rentNegotiable"
+								class="text-sm font-semibold"
+								>Rent Negotiable:</label
+							>
+							<input
+								type="checkbox"
+								id="rentNegotiable"
+								class="mt-1" />
+
+							<label class="text-sm font-semibold"
+								>Preferred Tenants<span>*</span>:</label
+							>
+							<div class="mt-1">
+								<input
+									type="checkbox"
+									id="anyone"
+									name="tenant"
+									value="Anyone" />
+								<label
+									for="anyone"
+									class="ml-1"
+									>Anyone</label
+								>
+								<input
+									type="checkbox"
+									id="family"
+									name="tenant"
+									value="Family" />
+								<label
+									for="family"
+									class="ml-1"
+									>Family</label
+								><br />
+
+								<input
+									type="checkbox"
+									id="bachelorMale"
+									name="tenant"
+									value="Bachelor-Male" />
+								<label
+									for="bachelorMale"
+									class="ml-1"
+									>Bachelor - Male</label
+								><br />
+
+								<input
+									type="checkbox"
+									id="bachelorFemale"
+									name="tenant"
+									value="Bachelor-Female" />
+								<label
+									for="bachelorFemale"
+									class="ml-1"
+									>Bachelor - Female</label
+								><br />
+
+								<input
+									type="checkbox"
+									id="company"
+									name="tenant"
+									value="Company" />
+								<label
+									for="company"
+									class="ml-1"
+									>Company</label
+								>
+							</div>
+
+							<label
+								for="furnishing"
+								class="text-sm font-semibold"
+								>Furnishing<span>*</span>:</label
+							>
+							<select
+								id="furnishing"
+								required
+								class="w-full p-2 border rounded">
+								<option
+									value=""
+									selected
+									disabled>
+									Select
+								</option>
+								<option value="fullyFurnished">Fully Furnished</option>
+								<option value="semiFurnished">Semi Furnished</option>
+								<option value="unfurnished">Unfurnished</option>
+							</select>
+
+							<label
+								for="parking"
+								class="text-sm font-semibold"
+								>Parking<span>*</span>:</label
+							>
+							<select
+								id="parking"
+								required
+								class="w-full p-2 border rounded">
+								<option
+									value=""
+									selected
+									disabled>
+									Select
+								</option>
+								<option value="car">Car</option>
+								<option value="bike">Bike</option>
+								<option value="both">Both</option>
+								<option value="none">None</option>
+							</select>
+
+							<label
+								for="description"
+								class="text-sm font-semibold"
+								>Description<span>*</span>:</label
+							>
+							<textarea
+								id="description"
+								required
+								class="w-full p-2 border rounded"></textarea>
+
+							<p
+								id="rentalErrorMessage"
+								class="hidden text-red-500">
+								Please fill in all required fields.
+							</p>
+
+							<button
+								type="submit"
+								id="rentalDetailssubmit"
+								class="w-full bg-blue-500 text-white py-2 rounded">
+								Save and Continue
+							</button>
+						</form>
+						<button
+							id="rentalcloseModal"
+							class="close-button absolute top-0 right-0 mt-4 mr-4">
+							&times;
+						</button>
+					</div>
+				</div>
+
+				<div
+					id="salesDetailsModal"
+					class="modal">
+					<div class="modal-content">
+						<form id="salesDetailsForm">
+							<label for="expectedPrice">Expected Price<span>*</span>:</label>
+							<div class="input-with-symbol">
+								<span class="input-symbol">₹</span>
+								<input
+									type="number"
+									id="expectedPrice"
+									min="1"
+									required />
+							</div>
+
+							<label for="priceNegotiable">Price Negotiable:</label>
+							<input
+								type="checkbox"
+								id="priceNegotiable" /><br />
+
+							<label for="underLoan">Currently under Loan:</label>
+							<input
+								type="checkbox"
+								id="underLoan" /><br />
+
+							<label for="furnishing2">Furnishing<span>*</span>:</label>
+							<select
+								id="furnishing2"
+								required>
+								<option
+									value=""
+									selected
+									disabled>
+									Select
+								</option>
+								<option value="fullyFurnished">Fully Furnished</option>
+								<option value="semiFurnished">Semi Furnished</option>
+								<option value="unfurnished">Unfurnished</option>
+							</select>
+
+							<label for="parking2">Parking<span>*</span>:</label>
+							<select
+								id="parking2"
+								required>
+								<option
+									value=""
+									selected
+									disabled>
+									Select
+								</option>
+								<option value="car">Car</option>
+								<option value="bike">Bike</option>
+								<option value="both">Both</option>
+								<option value="none">None</option>
+							</select>
+
+							<label for="description2">Description<span>*</span>:</label>
+							<textarea
+								id="description2"
+								required></textarea>
+
+							<p
+								id="salesErrorMessage"
+								style="display: none; color: red">
+								Please fill in all required fields.
+							</p>
+
+							<button
+								type="submit"
+								id="salesDetailssubmit">
+								Save and Continue
+							</button>
+						</form>
+						<button
+							id="salescloseModal"
+							class="close-button">
+							×
+						</button>
+					</div>
+				</div>
+
+				<div
+					id="galleryModal"
+					class="modal">
+					<div class="modal-content">
+						<form id="galleryDetailsForm">
+							<label
+								for="image"
+								style="margin-left: 41%"
+								>Add Image:</label
+							>
+							<div id="imageContainer">
+								<div
+									class="image-box"
+									style="margin-left: 29%">
+									<label
+										for="file-upload"
+										class="custom-file-upload">
+										<i class="fa fa-plus"></i>
+									</label>
+									<input
+										type="file"
+										id="file-upload"
+										class="file-upload"
+										accept="image/*"
+										required />
+								</div>
+							</div>
+
+							<button
+								type="button"
+								id="addMore"
+								style="
+									margin-left: 37%;
+									border: none;
+									height: 35px;
+									margin-bottom: 15px;
+								">
+								Add More Images
+							</button>
+							<p
+								id="galleryErrorMessage"
+								style="display: none; color: red">
+								Select Atleast One Image.
+							</p>
+							<button
+								type="submit"
+								id="submitGallery">
+								Submit and Continue
+							</button>
+						</form>
+						<button
+							id="closegalleryModal"
+							class="close-button">
+							×
+						</button>
+					</div>
+				</div>
+			</div>
+		</main>
+
+		<footer>
+			<!-- Add footer content here -->
+		</footer>
+	</body>
+	<script type="module">
+		//------------------------Firebase Config-----------------------
+		import { initializeApp } from "https://www.gstatic.com/firebasejs/10.3.1/firebase-app.js";
+		import {
+			ref,
+			uploadBytesResumable,
+			uploadBytes,
+			getDownloadURL,
+			getStorage,
+		} from "https://www.gstatic.com/firebasejs/10.3.1/firebase-storage.js";
+		import {
+			getFirestore,
+			collection,
+			query,
+			where,
+			getDocs,
+			doc,
+			getDoc,
+			setDoc,
+		} from "https://www.gstatic.com/firebasejs/10.3.1/firebase-firestore.js";
+
+		const firebaseConfig = {
+			apiKey: "AIzaSyCni58nYfqke3dQ0YF85mUG0GelTXd4wbU",
+			authDomain: "insta-web-48e44.firebaseapp.com",
+			databaseURL: "https://insta-web-48e44-default-rtdb.firebaseio.com",
+			projectId: "insta-web-48e44",
+			storageBucket: "insta-web-48e44.appspot.com",
+			messagingSenderId: "685569844225",
+			appId: "1:685569844225:web:ee6d8428a9616b11f44c00",
+		};
+
+		const app = initializeApp(firebaseConfig);
+		const firestore = getFirestore(app);
+		const storage = getStorage(app);
+
+		const usersCollection = collection(firestore, "users");
+		const userDocRef = doc(usersCollection, "userDoc");
+
+		const saleDetails = document.getElementById("saleDetails");
+		const propertyDetails = document.getElementById("propertyDetails");
+		const localityDetails = document.getElementById("localityDetails");
+		const rentalDetails = document.getElementById("rentalDetails");
+		const gallery = document.getElementById("gallery");
+		const mainSubmit = document.getElementById("mainSubmit");
+
+		propertyDetails.style.display = "none";
+		localityDetails.style.display = "none";
+		rentalDetails.style.display = "none";
+		gallery.style.display = "none";
+		mainSubmit.style.display = "none";
+		saleDetails.style.display = "none";
+
+		document
+			.getElementById("listPropertyBtn")
+			.addEventListener("click", function () {
+				document.getElementById("myModal").style.display = "block";
+				const uniquePropertyId = generateUniquePropertyId();
+				localStorage.clear();
+				sessionStorage.clear();
+				const properties = { propertyId: uniquePropertyId };
+				localStorage.setItem("properties", JSON.stringify(properties));
+			});
+
+		function generateUniquePropertyId() {
+			const characters =
+				"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+			let result = "";
+			const charactersLength = characters.length;
+			for (let i = 0; i < 8; i++) {
+				result += characters.charAt(
+					Math.floor(Math.random() * charactersLength)
+				);
+			}
+			console.log("Generated Property ID:", result);
+			return result;
+		}
+
+		window.onclick = function (event) {
+			var modal = document.getElementById("myModal");
+			if (event.target === modal) {
+				modal.style.display = "none";
+				localStorage.removeItem("properties");
+				sessionStorage.removeItem("propertyId");
+			}
+		};
+
+		const propertyTypeSelect = document.getElementById("propertyTypeSelect");
+		const adTypeSelect = document.getElementById("adTypeSelect");
+
+		propertyTypeSelect.addEventListener("change", function () {
+			adTypeSelect.innerHTML = "";
+			propertyDetails.style.display = "block";
+			localityDetails.style.display = "block";
+			gallery.style.display = "block";
+			saleDetails.style.display = "none";
+			rentalDetails.style.display = "block";
+			mainSubmit.style.display = "block";
+			if (propertyTypeSelect.value === "residential") {
+				var options = ["Rent", "Resale", "PG/Hostel"];
+				for (var option of options) {
+					var element = document.createElement("option");
+					element.value = option.toLowerCase();
+					element.text = option;
+					adTypeSelect.add(element);
+				}
+			} else if (propertyTypeSelect.value === "commercial") {
+				var options = ["Rent", "Sale"];
+				for (var option of options) {
+					var element = document.createElement("option");
+					element.value = option.toLowerCase();
+					element.text = option;
+					adTypeSelect.add(element);
+				}
+			} else if (propertyTypeSelect.value === "land") {
+				var options = ["Resale"];
+				for (var option of options) {
+					var element = document.createElement("option");
+					element.value = option.toLowerCase();
+					element.text = option;
+					adTypeSelect.add(element);
+				}
+			}
+		});
+
+		adTypeSelect.addEventListener("change", function () {
+			const selectedAdType = adTypeSelect.value;
+			if (selectedAdType === "rent") {
+				saleDetails.style.display = "none";
+				rentalDetails.style.display = "block";
+			} else if (selectedAdType === "sale" || selectedAdType === "resale") {
+				saleDetails.style.display = "block";
+				rentalDetails.style.display = "none";
+			}
+		});
+
+		document
+			.getElementById("propertyDetails")
+			.addEventListener("click", function () {
+				var modal = document.getElementById("propertyDetailsModal");
+				modal.style.display = "block";
+			});
+
+		document
+			.getElementById("localityDetails")
+			.addEventListener("click", function () {
+				var modal = document.getElementById("localityDetailsModal");
+				modal.style.display = "block";
+			});
+
+		document
+			.getElementById("saleDetails")
+			.addEventListener("click", function () {
+				var modal = document.getElementById("salesDetailsModal");
+				modal.style.display = "block";
+			});
+
+		document
+			.getElementById("rentalDetails")
+			.addEventListener("click", function () {
+				var modal = document.getElementById("rentalDetailsModal");
+				modal.style.display = "block";
+			});
+
+		document.getElementById("gallery").addEventListener("click", function () {
+			var modal = document.getElementById("galleryModal");
+			modal.style.display = "block";
+		});
+
+		const addMoreButton = document.getElementById("addMore");
+		const imageContainer = document.getElementById("imageContainer");
+
+		let imageCount = 1;
+
+		addMoreButton.addEventListener("click", function () {
+			const newInput = document.createElement("div");
+			newInput.className = "image-box";
+			newInput.innerHTML = `
+				          <label for="file-upload${imageCount}" class="custom-file-upload">
+				              <i class="fa fa-plus"></i>
+				          </label>
+				          <input type="file" id="file-upload${imageCount}" class="file-upload" accept="image/*" required />
+				      `;
+			imageContainer.appendChild(newInput);
+			imageCount++;
+		});
+
+		document
+			.getElementById("propertyDetailsubmit")
+			.addEventListener("click", function (event) {
+				event.preventDefault();
+
+				const buildingType = document.getElementById("buildingType").value;
+				const bhkType = document.getElementById("bhkType").value;
+				const floor = document.getElementById("floor").value;
+				const totalFloors = document.getElementById("totalFloors").value;
+				const propertyAge = document.getElementById("propertyAge").value;
+				const facing = document.getElementById("facing").value || null;
+				const squareFeet = document.getElementById("squareFeet").value;
+
+				if (
+					!buildingType ||
+					!bhkType ||
+					!floor ||
+					!totalFloors ||
+					!propertyAge ||
+					!squareFeet
+				) {
+					const errorMessage = document.getElementById("propertyErrorMessage");
+					errorMessage.style.display = "block";
+					return;
+				}
+
+				const propertyData = {
+					buildingType,
+					bhkType,
+					floor,
+					totalFloors,
+					propertyAge,
+					facing,
+					squareFeet,
+				};
+
+				if (localStorage.getItem("properties")) {
+					const existingProperties = JSON.parse(
+						localStorage.getItem("properties")
+					);
+					const mergedProperties = { ...existingProperties, ...propertyData };
+					localStorage.setItem("properties", JSON.stringify(mergedProperties));
+					console.log(mergedProperties);
+				} else {
+					const properties = propertyData;
+					localStorage.setItem("properties", JSON.stringify(properties));
+					console.log(properties);
+				}
+
+				document.getElementById("propertyDetailsModal").style.display = "none";
+				document.getElementById("propertyDetails").style.backgroundColor =
+					"green";
+				sessionStorage.setItem("propertySectionFilled", "true");
+				//localityDetails.style.display = "block";
+			});
+
+		document
+			.getElementById("localityDetailsubmit")
+			.addEventListener("click", function (event) {
+				event.preventDefault();
+
+				const city = document.getElementById("city").value;
+				const locality = document.getElementById("locality").value;
+				const landmark = document.getElementById("landmark").value;
+
+				if (!city || !locality || !landmark) {
+					const errorMessage = document.getElementById("localityErrorMessage");
+					errorMessage.textContent = "All fields are required.";
+					errorMessage.style.display = "block";
+					return;
+				}
+
+				if (localStorage.getItem("properties")) {
+					let properties = JSON.parse(localStorage.getItem("properties"));
+					if (properties) {
+						properties.city = city;
+						properties.locality = locality;
+						properties.landmark = landmark;
+						console.log(properties);
+					} else {
+						console.error("Error: Properties data not found in local storage.");
+						return;
+					}
+					localStorage.setItem("properties", JSON.stringify(properties));
+					console.log(properties);
+				} else {
+					const properties = { city, locality, landmark };
+					localStorage.setItem("properties", JSON.stringify(properties));
+					console.log(properties);
+				}
+
+				document.getElementById("localityDetailsModal").style.display = "none";
+				document.getElementById("localityDetails").style.backgroundColor =
+					"green";
+				sessionStorage.setItem("localitySectionFilled", "true");
+				//rentalDetails.style.display = "block";
+			});
+
+		document
+			.getElementById("rentalDetailssubmit")
+			.addEventListener("click", function (event) {
+				event.preventDefault();
+
+				const expectedRent = document.getElementById("expectedRent").value;
+				const expectedDeposit =
+					document.getElementById("expectedDeposit").value;
+				const rentNegotiable =
+					document.getElementById("rentNegotiable").checked;
+				const tenants = document.querySelectorAll(
+					'input[name="tenant"]:checked'
+				);
+				const preferredTenants = Array.from(tenants).map(
+					(tenant) => tenant.value
+				);
+				const furnishing = document.getElementById("furnishing").value;
+				const parking = document.getElementById("parking").value;
+				const description = document.getElementById("description").value;
+
+				if (preferredTenants.length === 0) {
+					document.getElementById("error").style.display = "inline";
+					return;
+				}
+				if (!expectedRent || !expectedDeposit || !furnishing || !parking) {
+					const errorElement = document.getElementById("rentalErrorMessage");
+					errorElement.style.display = "block";
+					return;
+				}
+
+				const rentalData = {
+					expectedRent,
+					expectedDeposit,
+					rentNegotiable,
+					preferredTenants,
+					furnishing,
+					parking,
+					description,
+				};
+
+				const propertyId = sessionStorage.getItem("propertyId");
+
+				if (localStorage.getItem("properties")) {
+					const properties = JSON.parse(localStorage.getItem("properties"));
+					if (properties) {
+						properties.rentalData = rentalData;
+						localStorage.setItem("properties", JSON.stringify(properties));
+						console.log(properties);
+					} else {
+						console.error("Property ID not found.");
+					}
+				} else {
+					console.error("No properties found.");
+				}
+
+				document.getElementById("rentalDetailsModal").style.display = "none";
+				document.getElementById("rentalDetails").style.backgroundColor =
+					"green";
+				//gallery.style.display = "block";
+				sessionStorage.setItem("rentalSectionFilled", "true");
+			});
+
+		const checkboxes = document.querySelectorAll('input[name="tenant"]');
+		checkboxes.forEach((checkbox) => {
+			checkbox.addEventListener("change", function () {
+				checkboxes.forEach((c) => (c.required = false));
+				const atLeastOneChecked = Array.from(checkboxes).some((c) => c.checked);
+				checkboxes.forEach((c) => (c.required = !atLeastOneChecked));
+				document.getElementById("error").style.display = atLeastOneChecked
+					? "none"
+					: "inline";
+			});
+		});
+
+		document
+			.getElementById("salesDetailssubmit")
+			.addEventListener("click", function (event) {
+				event.preventDefault();
+
+				const expectedPrice = document.getElementById("expectedPrice").value;
+
+				const priceNegotiable =
+					document.getElementById("priceNegotiable").checked;
+				const underLoan = document.getElementById("underLoan").checked;
+
+				const furnishing = document.getElementById("furnishing2").value;
+				const parking = document.getElementById("parking2").value;
+				const description = document.getElementById("description2").value;
+
+				//console.log(expectedPrice, furnishing, parking);
+
+				if (!expectedPrice || !furnishing || !parking) {
+					const errorElement = document.getElementById("salesErrorMessage");
+					errorElement.style.display = "block";
+					return;
+				}
+
+				const salesData = {
+					expectedPrice,
+					priceNegotiable,
+					underLoan,
+					furnishing,
+					parking,
+					description,
+				};
+				if (localStorage.getItem("properties")) {
+					const properties = JSON.parse(localStorage.getItem("properties"));
+					if (properties) {
+						properties.salesData = salesData;
+						localStorage.setItem("properties", JSON.stringify(properties));
+						//console.log(properties);
+					} else {
+						console.error("Property ID not found.");
+					}
+				} else {
+					console.error("No properties found.");
+				}
+
+				document.getElementById("salesDetailsModal").style.display = "none";
+				document.getElementById("saleDetails").style.backgroundColor = "green";
+				//gallery.style.display = "block";
+				sessionStorage.setItem("saleSectionFilled", "true");
+			});
+
+		const propertyImages = [];
+		const form = document.getElementById("galleryDetailsForm");
+
+		form.addEventListener("submit", async (event) => {
+			event.preventDefault();
+
+			const fileUpload = document.getElementById("file-upload");
+			const errorMessage = document.getElementById("galleryErrorMessage");
+			if (!fileUpload.files.length) {
+				errorMessage.style.display = "block";
+				console.log("Error: No files selected.");
+			} else {
+				errorMessage.style.display = "none";
+			}
+
+			const properties = JSON.parse(localStorage.getItem("properties"));
+			const propertyId = properties.propertyId;
+			//console.log("Property ID:", propertyId);
+			const images = document.querySelectorAll(".file-upload");
+			const promises = [];
+
+			for (let i = 0; i < images.length; i++) {
+				const image = images[i].files[0];
+				if (image) {
+					const imageName = `propertyImages/${propertyId}/image${i + 1}`;
+					const storageRef = ref(storage, imageName);
+
+					const uploadTask = uploadBytes(storageRef, image);
+
+					promises.push(
+						new Promise((resolve, reject) => {
+							uploadTask.then((snapshot) => {
+								getDownloadURL(snapshot.ref).then((downloadURL) => {
+									propertyImages.push(downloadURL);
+									resolve();
+								});
+							});
+						})
+					);
+				}
+			}
+
+			Promise.all(promises)
+				.then(() => {
+					if (propertyImages.length > 0) {
+						const properties =
+							JSON.parse(localStorage.getItem("properties")) || {};
+						properties.imageUrls = propertyImages;
+						console.log(propertyImages);
+						localStorage.setItem("properties", JSON.stringify(properties));
+						document.getElementById("galleryModal").style.display = "none";
+						gallery.style.backgroundColor = "green";
+						sessionStorage.setItem("gallerySectionFilled", "true");
+						propertyImages.length = 0;
+					}
+				})
+				.catch((error) => {
+					console.error("Error uploading images:", error);
+				});
+
+			console.log("Array of Image URLs:", propertyImages);
+		});
+
+		document
+			.getElementById("mainSubmit")
+			.addEventListener("click", async function (event) {
+				event.preventDefault();
+
+				const propertiesData = JSON.parse(localStorage.getItem("properties"));
+				const propertyType =
+					document.getElementById("propertyTypeSelect").value;
+				const adType = document.getElementById("adTypeSelect").value;
+
+				if (!propertyType || !adType) {
+					const successMessage = document.getElementById("sucessMessage");
+					successMessage.style.display = "block";
+					successMessage.textContent =
+						"Please select both property type and ad type!";
+					return;
+				}
+				propertiesData.propertyType = propertyType;
+				propertiesData.adType = adType;
+
+				if (adType === "rent") {
+					if (
+						sessionStorage.getItem("propertySectionFilled") !== "true" ||
+						sessionStorage.getItem("localitySectionFilled") !== "true" ||
+						sessionStorage.getItem("rentalSectionFilled") !== "true" ||
+						sessionStorage.getItem("gallerySectionFilled") !== "true"
+					) {
+						const successMessage = document.getElementById("successMessage");
+						successMessage.style.display = "block";
+						successMessage.style.color = "red";
+						successMessage.textContent = "Please fill all the sections!";
+						return;
+					}
+				} else if (adType === "sale" || adType === "resale") {
+					if (
+						sessionStorage.getItem("propertySectionFilled") !== "true" ||
+						sessionStorage.getItem("localitySectionFilled") !== "true" ||
+						sessionStorage.getItem("saleSectionFilled") !== "true" ||
+						sessionStorage.getItem("gallerySectionFilled") !== "true"
+					) {
+						const successMessage = document.getElementById("successMessage");
+						successMessage.style.display = "block";
+						successMessage.style.color = "red";
+						successMessage.textContent = "Please fill all the  sections!";
+						return;
+					}
+				}
+
+				try {
+					const userDocSnapshot = await getDoc(userDocRef);
+					const userData = userDocSnapshot.data();
+					if (userData && userData.properties) {
+						userData.properties.push(propertiesData);
+						console.log(propertiesData);
+					} else {
+						userData.properties = [propertiesData];
+					}
+					await setDoc(userDocRef, userData);
+
+					localStorage.removeItem("properties");
+					//sessionStorage.removeItem("propertyId");
+
+					const successMessage = document.getElementById("sucessMessage");
+					successMessage.style.display = "block";
+					successMessage.style.color = "green";
+					successMessage.textContent = "Data saved successfully!";
+					const propertyBlocks = document.querySelectorAll(".property-block");
+					const color = "#7996f3";
+					propertyBlocks.forEach((block) => {
+						block.style.backgroundColor = color;
+					});
+					document.getElementById("propertyForm").reset();
+					document.getElementById("propertyDetailsForm").reset();
+					document.getElementById("rentalDetailsForm").reset();
+					document.getElementById("localityDetailsForm").reset();
+					document.getElementById("salesDetailsForm").reset();
+					document.getElementById("galleryDetailsForm").reset();
+					propertyDetails.style.display = "none";
+					localityDetails.style.display = "none";
+					rentalDetails.style.display = "none";
+					gallery.style.display = "none";
+					mainSubmit.style.display = "none";
+					saleDetails.style.display = "none";
+				} catch (error) {
+					console.error("Error adding document: ", error);
+				}
+			});
+
+		document
+			.getElementById("closeModal")
+			.addEventListener("click", function () {
+				var myModal = document.getElementById("myModal");
+
+				myModal.style.display = "none";
+			});
+		document
+			.getElementById("closegalleryModal")
+			.addEventListener("click", function () {
+				var galleryModal = document.getElementById("galleryModal");
+				galleryModal.style.display = "none";
+			});
+		document
+			.getElementById("salescloseModal")
+			.addEventListener("click", function () {
+				var salesDetailsModal = document.getElementById("salesDetailsModal");
+				salesDetailsModal.style.display = "none";
+			});
+		document
+			.getElementById("rentalcloseModal")
+			.addEventListener("click", function () {
+				var rentalDetailsModal = document.getElementById("rentalDetailsModal");
+				rentalDetailsModal.style.display = "none";
+			});
+		document
+			.getElementById("localitycloseModal")
+			.addEventListener("click", function () {
+				var localityDetailsModal = document.getElementById(
+					"localityDetailsModal"
+				);
+
+				localityDetailsModal.style.display = "none";
+			});
+		document
+			.getElementById("propertycloseModal")
+			.addEventListener("click", function () {
+				var propertyDetailsModal = document.getElementById(
+					"propertyDetailsModal"
+				);
+
+				propertyDetailsModal.style.display = "none";
+			});
+
+		function populatePropertyData(properties) {
+			const propertyContainer = document.getElementById("property-container");
+			propertyContainer.innerHTML = "";
+
+			properties.forEach((property) => {
+				const card = document.createElement("div");
+				card.classList.add(
+					"property-card",
+					"relative",
+					"rounded",
+					"overflow-hidden",
+					"shadow-lg"
+				);
+
+				const carousel = document.createElement("div");
+				carousel.classList.add("carousel");
+
+				property.imageUrls.forEach((imageUrl) => {
+					const propertyImage = document.createElement("img");
+					propertyImage.src = imageUrl;
+					propertyImage.alt = property.locality;
+					carousel.appendChild(propertyImage);
+				});
+
+				card.appendChild(carousel);
+
+				const stamp = document.createElement("div");
+				stamp.classList.add("stamp");
+				if (property.adType === "rent") {
+					stamp.textContent = "For Rent";
+				} else if (property.adType === "resale" || property.adType === "sale") {
+					stamp.textContent = "For Sale";
+				}
+				card.appendChild(stamp);
+
+				const details = document.createElement("div");
+				details.classList.add("property-details", "p-4");
+				details.innerHTML = `
+            <p class="font-bold text-lg">${property.bhkType.toUpperCase()}</p>
+            <p>${property.buildingType.toUpperCase()}</p>
+            <p class="text-sm">Locality: ${property.locality.toUpperCase()}</p>`;
+				card.appendChild(details);
+
+				const buttonGroup = document.createElement("div");
+				buttonGroup.classList.add(
+					"absolute",
+					"bottom-4",
+					"right-4",
+					"space-x-2"
+				);
+				const lineBreak = document.createElement("br");
+				card.appendChild(lineBreak);
+
+				const editButton = document.createElement("button");
+				editButton.textContent = "Edit";
+				editButton.classList.add(
+					"px-4",
+					"py-2",
+					"bg-blue-500",
+					"text-white",
+					"rounded"
+				);
+				buttonGroup.appendChild(editButton);
+
+				const promoteButton = document.createElement("button");
+				promoteButton.textContent = "Promote";
+				promoteButton.classList.add(
+					"px-4",
+					"py-2",
+					"bg-green-500",
+					"text-white",
+					"rounded"
+				);
+				buttonGroup.appendChild(promoteButton);
+
+				const deleteButton = document.createElement("button");
+				deleteButton.textContent = "Delete";
+				deleteButton.classList.add(
+					"px-4",
+					"py-2",
+					"bg-red-500",
+					"text-white",
+					"rounded"
+				);
+				buttonGroup.appendChild(deleteButton);
+
+				card.appendChild(buttonGroup);
+
+				propertyContainer.appendChild(card);
+			});
+
+			if (!$(".carousel").hasClass("slick-initialized")) {
+				$(".carousel").slick({
+					slidesToShow: 1,
+					slidesToScroll: 1,
+					autoplay: true,
+					autoplaySpeed: 2000,
+					arrows: false,
+				});
+			}
+		}
+
+		function fetchDataAndPopulate() {
+			getDoc(userDocRef)
+				.then((doc) => {
+					if (doc.exists()) {
+						const userDocData = doc.data();
+						populatePropertyData(userDocData.properties);
+						//populateFeaturedPropertyData(userDocData.properties);
+					} else {
+						console.log("No such document!");
+					}
+				})
+				.catch((error) => {
+					console.log("Error getting document:", error);
+				});
+		}
+		fetchDataAndPopulate();
+	</script>
+</html>
