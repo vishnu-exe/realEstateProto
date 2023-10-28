@@ -421,32 +421,61 @@
 								class="w-full p-2 mb-4 border rounded">
 								<!-- Options are dynamically added based on the property type selected -->
 							</select>
-
 							<div
 								id="propertyDetails"
 								class="property-block mb-4">
-								Property Details
+								<h3>Property Details</h3>
+								<p>
+									Add specific information about your property, such as its
+									type, size, and any special features or amenities you want to
+									highlight.
+								</p>
 							</div>
+
 							<div
 								id="localityDetails"
 								class="property-block mb-4">
-								Locality Details
+								<h3>Locality Details</h3>
+								<p>
+									Share insights about the surrounding area and neighborhood to
+									help potential renters or buyers understand the advantages of
+									living in this location.
+								</p>
 							</div>
+
 							<div
 								id="rentalDetails"
 								class="property-block mb-4">
-								Rental Details
+								<h3>Rental Details</h3>
+								<p>
+									Include any relevant information about rental terms,
+									requirements, and guidelines for potential renters interested
+									in your property.
+								</p>
 							</div>
+
 							<div
 								id="saleDetails"
 								class="property-block mb-4">
-								Sale Details
+								<h3>Sale Details</h3>
+								<p>
+									Share specific details about the property you wish to sell,
+									including terms, pricing, and any additional information that
+									prospective buyers should know.
+								</p>
 							</div>
+
 							<div
 								id="gallery"
 								class="property-block mb-4">
-								Gallery
+								<h3>Gallery</h3>
+								<p>
+									Upload images showcasing your property's unique features to
+									attract potential users and give them a comprehensive view of
+									what your property has to offer.
+								</p>
 							</div>
+
 							<button
 								type="submit"
 								id="mainSubmit"
@@ -1210,11 +1239,11 @@
 			const newInput = document.createElement("div");
 			newInput.className = "image-box";
 			newInput.innerHTML = `
-				          <label for="file-upload${imageCount}" class="custom-file-upload">
-				              <i class="fa fa-plus"></i>
-				          </label>
-				          <input type="file" id="file-upload${imageCount}" class="file-upload" accept="image/*" required />
-				      `;
+						          <label for="file-upload${imageCount}" class="custom-file-upload">
+						              <i class="fa fa-plus"></i>
+						          </label>
+						          <input type="file" id="file-upload${imageCount}" class="file-upload" accept="image/*" required />
+						      `;
 			imageContainer.appendChild(newInput);
 			imageCount++;
 		});
@@ -1674,9 +1703,9 @@
 				const details = document.createElement("div");
 				details.classList.add("property-details", "p-4");
 				details.innerHTML = `
-            <p class="font-bold text-lg">${property.bhkType.toUpperCase()}</p>
-            <p>${property.buildingType.toUpperCase()}</p>
-            <p class="text-sm">Locality: ${property.locality.toUpperCase()}</p>`;
+		            <p class="font-bold text-lg">${property.bhkType.toUpperCase()}</p>
+		            <p>${property.buildingType.toUpperCase()}</p>
+		            <p class="text-sm">Locality: ${property.locality.toUpperCase()}</p>`;
 				card.appendChild(details);
 
 				const buttonGroup = document.createElement("div");
@@ -1724,18 +1753,45 @@
 
 				card.appendChild(buttonGroup);
 
+				const openModal1 = () => {
+					const modal = createModal("This option is not available now");
+					document.body.appendChild(modal);
+
+					window.addEventListener("click", (event) => {
+						if (event.target === modal) {
+							closeModal(modal);
+						}
+					});
+					setTimeout(() => {
+						closeModal(modal);
+					}, 5000);
+				};
+
+				const createModal = (message) => {
+					const modal = document.createElement("div");
+					modal.classList.add("error-modal");
+					modal.textContent = message;
+					modal.style.position = "fixed";
+					modal.style.top = "50%";
+					modal.style.left = "50%";
+					modal.style.transform = "translate(-50%, -50%)";
+					modal.style.backgroundColor = "rgba(255, 0, 0, 0.8)";
+					modal.style.color = "#fff";
+					modal.style.padding = "20px";
+					modal.style.borderRadius = "10px";
+					modal.style.zIndex = "9999";
+					return modal;
+				};
+				const closeModal = (modal) => {
+					modal.remove();
+				};
+
+				editButton.addEventListener("click", openModal1);
+				promoteButton.addEventListener("click", openModal1);
+				deleteButton.addEventListener("click", openModal1);
+
 				propertyContainer.appendChild(card);
 			});
-
-			if (!$(".carousel").hasClass("slick-initialized")) {
-				$(".carousel").slick({
-					slidesToShow: 1,
-					slidesToScroll: 1,
-					autoplay: true,
-					autoplaySpeed: 2000,
-					arrows: false,
-				});
-			}
 		}
 
 		function fetchDataAndPopulate() {
